@@ -22,14 +22,15 @@ models = ['CanESM5']
 
 # First extract data from the piControl run. Go through each model in turn
 files = {}
-cube_ctl = {}
 runlist = {}
-dates_ctl = {}
 for model in models:
+    print(model)
     for var in vars:
         files[var] = glob.glob('/nfs/b0110/Data/cmip6/%s/piControl/*/Amon/%s/*/*.nc' % (model, var))
+
         # first check: len(runlist) > 0 for each var.
         if len(files[var])==0:
+            print(' --- no %s variables found for %s' % (var, model))
             break
 
     # passed first check so add to list of provisional models
@@ -39,53 +40,51 @@ for model in models:
     for file in files[var]:
         allruns.add(file.split('/')[7])
     runlist[model] = list(allruns) 
-    dates_ctl[model] = {}
-    cube_ctl[model] = {}
 
     # second check: grab and process the variables, see if they are the same length
     for run in runlist[model]:
-        cube_ctl[model][run] = {}
-        dates_ctl[model][run] = {}
+        print(' --- attempting processing for %s, %s' % (model, run))
+        cube_ctl = {}
         for var in vars:
-            cube_ctl[model][run][var] = iris.load('/nfs/b0110/Data/cmip6/%s/piControl/%s/Amon/%s/*/*.nc' % (model, run, var))
-            unify_time_units(cube_ctl[model][run][var])
-            equalise_attributes(cube_ctl[model][run][var])
-            cube_ctl[model][run][var] = cube_ctl[model][run][var].concatenate_cube()
-            if not cube_ctl[model][run][var].coord('longitude').has_bounds():
-                cube_ctl[model][run][var].coord('longitude').guess_bounds()
-            if not cube_ctl[model][run][var].coord('latitude').has_bounds():
-                cube_ctl[model][run][var].coord('latitude').guess_bounds()
-            grid_areas = iris.analysis.cartography.area_weights(cube_ctl[model][run][var])
-            iris.coord_categorisation.add_year(cube_ctl[model][run][var], 'time', name='year')
-            cube_ctl[model][run][var] = cube_ctl[model][run][var].collapsed(['longitude', 'latitude'], iris.analysis.MEAN, weights=grid_areas).aggregated_by('year', iris.analysis.MEAN)
-            time_c = cube_ctl[model][run][var].coord('time')
-            dates_ctl[model][run][var] = [cell.point for cell in time_c.cells()]
+            cube_ctl[var] = iris.load('/nfs/b0110/Data/cmip6/%s/piControl/%s/Amon/%s/*/*.nc' % (model, run, var))
+            unify_time_units(cube_ctl[var])
+            equalise_attributes(cube_ctl[var])
+            cube_ctl[var] = cube_ctl[var].concatenate_cube()
+            if not cube_ctl[var].coord('longitude').has_bounds():
+                cube_ctl[var].coord('longitude').guess_bounds()
+            if not cube_ctl[var].coord('latitude').has_bounds():
+                cube_ctl[var].coord('latitude').guess_bounds()
+            grid_areas = iris.analysis.cartography.area_weights(cube_ctl[var])
+            iris.coord_categorisation.add_year(cube_ctl[var], 'time', name='year')
+            cube_ctl[var] = cube_ctl[var].collapsed(['longitude', 'latitude'], iris.analysis.MEAN, weights=grid_areas).aggregated_by('year', iris.analysis.MEAN)
+        time_c = cube_ctl['rsdt'].coord('time')
+        dates_ctl = [cell.point for cell in time_c.cells()]
+
         # check that all of the cubes are the same number of time points.
         # If they are not, there are some missing variable slices and
         # the outputs will not make sense, so delete results for that model/run combination
         # it's sufficient to check everything relative to tas
-        tas_shape = cube_ctl[model][run][var].shape[0]
+        tas_shape = cube_ctl[var].shape[0]
         for var in vars:
-            if cube_ctl[model][run][var].shape[0] != tas_shape:
-                del cube_ctl[model][run]
-                del dates_ctl[model][run]
+            if cube_ctl[var].shape[0] != tas_shape:
+                print(' --- length of %s did not match tas for %s, %s' % (var, model, run))
                 break
 
-        # anything that gets to here has been successful
+        # anything that gets to here has been successful so process the data
         for var in vars:
-            cube_ctl[model][run][var] = cube_ctl[model][run][var].data
+            cube_ctl[var] = cube_ctl[var].data
     
-    #print(cube_ctl)
-    #print(dates_ctl)
         df = pd.DataFrame(
             {
-                'time': dates_ctl[model][run]['rsdt'],
-                'rsdt': cube_ctl[model][run]['rsdt'],
-                'rsut': cube_ctl[model][run]['rsut'],
-                'rlut': cube_ctl[model][run]['rlut'],
-                'tas' : cube_ctl[model][run]['tas']
+                'time': dates_ctl,
+                'rsdt': cube_ctl['rsdt'],
+                'rsut': cube_ctl['rsut'],
+                'rlut': cube_ctl['rlut'],
+                'tas' : cube_ctl['tas']
             }
         )
-        print(df)
+
         mkdir_p('../data_output/cmip6/%s/%s/' % (model, run))
-        df.to_csv('../data_output/cmip6/%s/%s/piControl.csv' % (model, run))
+        df.to_csv('../data_output/cmip6/%s/%s/piControl.csv' % (model, run), index=False)
+
+        print(' --- %s, %s was successful' % (model, run))
