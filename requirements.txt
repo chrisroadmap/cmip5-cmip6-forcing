@@ -1,7 +1,0 @@
-iris==2.4.0
-cftime==1.4.1
-climateforcing>=0.2.2
-numpy
-pandas
-#jupyter
-#nbstripout
