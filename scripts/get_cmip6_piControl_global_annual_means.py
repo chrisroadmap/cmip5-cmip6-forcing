@@ -15,9 +15,9 @@ warnings.simplefilter('ignore')
 vars = ['rsdt', 'rlut', 'rsut', 'tas']
 
 # We only care about models where Mark has crunched the data
-with open('../data_input/cmip56_feedbacks_AR6.json', 'rb') as f:
+with open('../data_input/cmip56_forcing_feedback_ecs.json', 'rb') as f:
     feedbacks = json.load(f)
-models = feedbacks['cmip6']['models']
+models = feedbacks['CMIP6']
 
 successful = [
     'ACCESS-CM2',
@@ -32,6 +32,7 @@ successful = [
     'CESM2-WACCM-FV2',
     'CIESM',
     'CMCC-CM2-SR5',
+    'CMCC-ESM2',
     'CNRM-CM6-1',
     'CNRM-CM6-1-HR',
     'CNRM-ESM2-1',
@@ -71,7 +72,6 @@ successful = [
 ]
 
 novarsfound = [
-    'CMCC-ESM2',
 ]
 
 # First extract data from the piControl run. Go through each model in turn

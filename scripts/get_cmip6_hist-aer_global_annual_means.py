@@ -19,9 +19,9 @@ def convert(obj):
 vars = ['rsdt', 'rlut', 'rsut', 'tas']
 
 # We only care about models where Mark has crunched the data
-with open('../data_input/cmip56_feedbacks_AR6.json', 'rb') as f:
+with open('../data_input/cmip56_forcing_feedback_ecs.json', 'rb') as f:
     feedbacks = json.load(f)
-models = feedbacks['cmip6']['models']
+models = feedbacks['CMIP6']
 
 successful = [
     'ACCESS-CM2',
@@ -30,6 +30,7 @@ successful = [
     'CESM2',
     'CNRM-CM6-1',
     'FGOALS-g3',
+    'GFDL-ESM4',
     'GISS-E2-1-G',
     'HadGEM3-GC31-LL',
     'IPSL-CM6A-LR',

@@ -19,9 +19,9 @@ def convert(obj):
 vars = ['rsdt', 'rlut', 'rsut', 'tas']
 
 # We only care about models where Mark has crunched the data
-with open('../data_input/cmip56_feedbacks_AR6.json', 'rb') as f:
+with open('../data_input/cmip56_forcing_feedback_ecs.json', 'rb') as f:
     feedbacks = json.load(f)
-models = feedbacks['cmip6']['models']
+models = feedbacks['CMIP6']
 
 successful = [
     'ACCESS-CM2',
@@ -59,7 +59,7 @@ successful = [
 ]
 
 novarsfound = [
-    'BCC-CSM2-MR',
+    'BCC-CSM2-MR',  # BCC appears now to be unavailable on ESGF
     'BCC-ESM1',
     'CNRM-CM6-1-HR',
     'NESM3',
