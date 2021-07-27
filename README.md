@@ -5,6 +5,9 @@ Determining the historical ERF through the CMIPs
 
 1. `git clone git@github.com:chrisroadmap/cmip5-cmip6-forcing.git`
 2. `cd cmip5-cmip6-forcing`
-3. `conda create -n cmip5-cmip6-forcing python=3.7`
+3. `conda env create -f environment.yml`
 4. `conda activate cmip5-cmip6-forcing`
-5. `conda install --file requirements.txt -c default -c conda-forge -c chrisroadmap`
+5. `nbstripout --install`
+
+## Reproducing results
+The `notebooks` directory produces the figures and results in the paper.
