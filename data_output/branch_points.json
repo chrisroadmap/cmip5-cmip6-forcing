@@ -294,6 +294,13 @@
             "r3i1p1f1": 100,
             "r2i1p1f1": 50
         },
+        "NESM3": {
+            "r1i1p1f1": 300,
+            "r3i1p1f1": 50,
+            "r5i1p1f1": 150,
+            "r2i1p1f1": 251,
+            "r4i1p1f1": 101
+        },
         "NorESM2-LM": {
             "r1i1p1f1": 0,
             "r2i1p1f1": 31,
@@ -656,6 +663,32 @@
             "r4i1p1f1": 150,
             "r5i1p1f1": 200,
             "r2i1p1f1": 50
+        }
+    },
+    "abrupt-4xCO2": {
+        "CanESM5": {
+            "r1i1p1f1": 0
+        },
+        "CNRM-CM6-1": {
+            "r1i1p1f2": 0
+        },
+        "GFDL-CM4": {
+            "r1i1p1f1": 100
+        },
+        "HadGEM3-GC31-LL": {
+            "r1i1p1f3": 0
+        },
+        "IPSL-CM6A-LR": {
+            "r1i1p1f1": 20
+        },
+        "MIROC6": {
+            "r1i1p1f1": 0
+        },
+        "NorESM2-LM": {
+            "r1i1p1f1": 0
+        },
+        "GISS-E2-1-G": {
+            "r1i1p1f1": 0
         }
     }
 }

@@ -46,9 +46,12 @@ successful = [
     'GFDL-ESM4',
     'HadGEM3-GC31-LL',
     'HadGEM3-GC31-MM',
+    'INM-CM4-8',
+    'INM-CM5-0',
     'IPSL-CM6A-LR',
     'MIROC6',
     'MIROC-ES2L',
+    'NESM3',
     'NorESM2-LM',
     'NorESM2-MM',
     'MPI-ESM-1-2-HAM',
@@ -60,11 +63,10 @@ successful = [
 
 novarsfound = [
     'BCC-CSM2-MR',  # BCC appears now to be unavailable on ESGF
-    'BCC-ESM1',
-    'CNRM-CM6-1-HR',
-    'NESM3',
+    'BCC-ESM1',  # as above
+    'CNRM-CM6-1-HR',  # originally unavailable, will not try hard to obtain it given other CNRM models
     'NorCPM1',  # this a more general failure to do with iris
-    'SAM0-UNICON',
+    'SAM0-UNICON',  # appears to be unavailable on ESGF
 ]
 
 # Extract data from the historical run. Go through each model in turn
