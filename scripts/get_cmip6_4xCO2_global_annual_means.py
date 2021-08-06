@@ -18,8 +18,8 @@ def convert(obj):
 # Energy budget variables
 vars = ['rsdt', 'rlut', 'rsut', 'tas']
 
-# We only care about RFMIP-ERF models
 models = [
+    'ACCESS-ESM1-5',
     'CanESM5',
     'CNRM-CM6-1',
     'GFDL-CM4',
@@ -34,6 +34,7 @@ models = [
 # we want to use. For CanESM5 and GISS-E2-1-G we always use r1i1p1f1 for overall
 # consistency with the other experiments.
 runid = {
+    'ACCESS-ESM1-5': 'r1i1p1f1',
     'CanESM5': 'r1i1p1f1',
     'CNRM-CM6-1': 'r1i1p1f2',
     'GFDL-CM4': 'r1i1p1f1',
@@ -45,6 +46,14 @@ runid = {
 }
 
 successful = [
+    'CanESM5',
+    'CNRM-CM6-1',
+    'GFDL-CM4',
+    'GISS-E2-1-G',
+    'HadGEM3-GC31-LL',
+    'IPSL-CM6A-LR',
+    'MIROC6',
+    'NorESM2-LM',
 ]
 
 novarsfound = [
