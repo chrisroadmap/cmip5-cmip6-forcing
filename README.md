@@ -4,7 +4,7 @@ In the ensemble mean, CMIP6 models show less warming than CMIP5 models and obser
 ![plots/fig1.png](plots/fig1.png)
 
 ## Paper
-Currently in review.
+Accepted in *Geophysical Research Letters*.
 
 ## Installation / repo setup
 
