@@ -3,8 +3,8 @@ In the ensemble mean, CMIP6 models show less warming than CMIP5 models and obser
 
 ![plots/fig1.png](plots/fig1.png)
 
-## Paper
-Accepted in *Geophysical Research Letters*.
+## Citation
+Smith, C. J., & Forster, P. M. (2021). Suppressed late-20th Century warming in CMIP6 models explained by forcing and feedbacks. Geophysical Research Letters, 48, e2021GL094948. https://doi.org/10.1029/2021GL094948
 
 ## Installation / repo setup
 
